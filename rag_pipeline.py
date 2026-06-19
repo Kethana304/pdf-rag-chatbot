@@ -12,7 +12,7 @@ load_dotenv()
 
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 EMBED_MODEL = "all-MiniLM-L6-v2"
-LLM_MODEL = "llama3-70b-8192"
+LLM_MODEL = "llama-3.3-70b-versatile"
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 50
 
@@ -58,7 +58,6 @@ def build_vectorstore(pdf_path: str):
     print(f"      → FAISS index built successfully.")
 
     return vectorstore
-
 
 def build_qa_chain(vectorstore):
     """Build a RetrievalQA chain using Groq LLM and FAISS retriever."""
