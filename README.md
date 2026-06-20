@@ -175,6 +175,17 @@ pdf-rag-chatbot/
 - **In-memory vectorstore cache** allows multiple PDFs to be indexed in the same session without re-processing.
 
 ---
+## Production Deployment
+
+Deployed on AWS EC2 (Ubuntu, free-tier t3.small) with systemd for process management and GitHub Actions for CI/CD — every push to `main` triggers automatic redeployment.
+
+**The hard part wasn't the RAG pipeline — it was making it run on 1GB of RAM.**
+Loading the HuggingFace embedding model crashed the instance with OOM errors on first deploy. Fixed by:
+- Adding swap space to cover the memory gap during model load
+- Switching to a CPU-only PyTorch build (no CUDA dependencies needed, and a much smaller install)
+- Running the app under systemd so it auto-restarts on failure instead of silently dying
+
+This taught me that "production AI" is mostly disciplined systems engineering — memory budgeting, process supervision, deploy automation — not the model itself.
 
 ## Author
 
